@@ -85,9 +85,9 @@ export const translations = {
       completeProtection: "Complete Protection",
       requestDemo: "Request a Demo",
       tabs: {
-        calculator: "Pricing Calculator",
+        calculator: "Cost Calculator",
         portal: "Client Portal",
-        demo: "Request Demo",
+        demo: "Sales Deck",
         cases: "Case Studies"
       },
       calculator: {
@@ -104,14 +104,14 @@ export const translations = {
         access: "Authenticate"
       },
       demo: {
-        title: "Request a Demo",
+        title: "Generate Sales Deck",
         name: "Full Name",
         company: "Company Name",
         email: "Work Email",
         phone: "Phone Number",
         interest: "Interested Project",
         message: "Additional Message",
-        submit: "Submit Request",
+        submit: "Generate PDF",
         placeholders: {
           name: "Enter your name",
           email: "Enter your email",
@@ -135,20 +135,20 @@ export const translations = {
           desc: "Endpoints, parameters, and response types."
         },
         community: {
-          title: "Community",
+          title: "Community Forum",
           desc: "Join the discussion on Discord & GitHub."
         },
         blog: {
-          title: "Engineering Blog",
+          title: "Blog & News",
           desc: "Deep dives into security architecture."
         },
         tutorials: {
-          title: "Video Tutorials",
+          title: "Learning Center",
           desc: "Step-by-step implementation guides."
         },
         support: {
-          title: "Enterprise Support",
-          desc: "24/7 direct line to our security engineers."
+          title: "Developer Tools",
+          desc: "SDKs, APIs, and ready-to-use templates."
         }
       }
     },
@@ -320,9 +320,9 @@ export const translations = {
       completeProtection: "الحماية المتكاملة",
       requestDemo: "اطلب عرض تجريبي",
       tabs: {
-        calculator: "حاسبة الأسعار",
+        calculator: "حاسبة التكلفة",
         portal: "بوابة العملاء",
-        demo: "طلب عرض توضيحي",
+        demo: "عروض المبيعات",
         cases: "دراسات الحالة"
       },
       calculator: {
@@ -339,14 +339,14 @@ export const translations = {
         access: "توثيق الدخول"
       },
       demo: {
-        title: "طلب عرض تجريبي",
+        title: "إنشاء عرض مبيعات",
         name: "الاسم الكامل",
         company: "اسم الشركة",
         email: "بريد العمل",
         phone: "رقم الهاتف",
         interest: "المشروع المطلوب",
         message: "رسالة إضافية",
-        submit: "إرسال الطلب",
+        submit: "إنشاء PDF",
         placeholders: {
           name: "أدخل اسمك",
           email: "أدخل بريدك الإلكتروني",
@@ -370,20 +370,20 @@ export const translations = {
           desc: "نقاط النهاية والمعلمات وأنواع الاستجابة."
         },
         community: {
-          title: "المجتمع",
+          title: "منتدى المجتمع",
           desc: "انضم إلى المناقشة على Discord و GitHub."
         },
         blog: {
-          title: "المدونة الهندسية",
+          title: "الأخبار والمدونة",
           desc: "مقالات متعمقة في هندسة الأمان."
         },
         tutorials: {
-          title: "دروس فيديو",
+          title: "مركز التعليم",
           desc: "أدلة تنفيذ خطوة بخطوة."
         },
         support: {
-          title: "دعم المؤسسات",
-          desc: "خط مباشر 24/7 لمهندسي الأمن لدينا."
+          title: "أدوات المطورين",
+          desc: "حزم تطوير وقوالب جاهزة للاستخدام."
         }
       }
     },

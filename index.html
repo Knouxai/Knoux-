@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Knoux Nexus | Future of Security</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Rajdhani:wght@500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Rajdhani:wght@500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         darkMode: 'class',
@@ -20,21 +20,31 @@
                 900: '#1a0b2e',
                 800: '#2d1b4e',
                 600: '#5b21b6',
-                400: '#8b5cf6',
-                accent: '#00f0ff', // Cyan neon
-                pink: '#ff00ff'
+                500: '#7c3aed',
+                400: '#a78bfa',
+                accent: '#2dd4bf', // Teal/Cyan neon
+                pink: '#d946ef'
               }
             },
             animation: {
               'float': 'float 6s ease-in-out infinite',
               'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'spin-slow': 'spin 12s linear infinite',
+              'gradient': 'gradient 8s linear infinite',
             },
             keyframes: {
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
                 '50%': { transform: 'translateY(-20px)' },
+              },
+              gradient: {
+                '0%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+                '100%': { backgroundPosition: '0% 50%' },
               }
+            },
+            backgroundSize: {
+              '300%': '300%',
             }
           }
         }
@@ -46,7 +56,7 @@
         overflow-x: hidden;
       }
       
-      /* Hide cursor on desktop devices where hover is possible */
+      /* Hide cursor on desktop devices where hover is possible to use CustomCursor */
       @media (hover: hover) and (pointer: fine) {
         body, a, button, input, select, textarea {
           cursor: none;
@@ -54,10 +64,10 @@
       }
 
       .glass-panel {
-        @apply bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 transition-colors duration-300;
+        @apply bg-white/60 dark:bg-white/5 backdrop-blur-xl border border-gray-200 dark:border-white/10 transition-all duration-300;
       }
       .glass-panel-heavy {
-        @apply bg-white/80 dark:bg-[#0d0c18]/70 backdrop-blur-2xl border-b border-gray-200 dark:border-white/5 transition-colors duration-300;
+        @apply bg-white/80 dark:bg-[#0d0c18]/80 backdrop-blur-2xl border-b border-gray-200 dark:border-white/5 transition-all duration-300;
       }
       .neon-text {
         text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3);
@@ -65,19 +75,26 @@
       .neon-border {
         box-shadow: 0 0 10px rgba(139, 92, 246, 0.2), inset 0 0 10px rgba(139, 92, 246, 0.1);
       }
-      /* Custom Scrollbar */
+      
+      /* Custom Scrollbar - Sleek & Minimal */
       ::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
         @apply bg-slate-100 dark:bg-[#030014];
       }
       ::-webkit-scrollbar-thumb {
-        background: #4c1d95; 
-        border-radius: 4px;
+        @apply bg-knoux-600/50 rounded-full hover:bg-knoux-500;
       }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #6d28d9; 
+
+      /* Hide scrollbar for clean horizontal scrolls */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
     </style>
   <script type="importmap">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useThemeLanguage } from '../contexts/ThemeLanguageContext';
-import { Calculator, Briefcase, Building2, ChevronRight, Lock, CheckCircle, Video, Landmark, Building, ShieldCheck } from 'lucide-react';
+import { Calculator, Briefcase, Building2, ChevronRight, Lock, CheckCircle, Video, Landmark, Building, ShieldCheck, FileText } from 'lucide-react';
 import { DemoRequestForm } from './DemoRequestForm';
 import { CaseStudyCard } from './CaseStudyCard';
 
@@ -21,7 +21,7 @@ export const EnterpriseSection: React.FC = () => {
     { id: 'cases', label: t.enterprise.tabs.cases, icon: Building2 },
     { id: 'calculator', label: t.enterprise.tabs.calculator, icon: Calculator },
     { id: 'portal', label: t.enterprise.tabs.portal, icon: Lock },
-    { id: 'demo', label: t.enterprise.tabs.demo, icon: Video },
+    { id: 'demo', label: t.enterprise.tabs.demo, icon: FileText },
   ];
 
   return (
@@ -63,7 +63,7 @@ export const EnterpriseSection: React.FC = () => {
                  title="Global Banking Security Overhaul"
                  company="InterContinental Finance"
                  industry="Finance"
-                 challenge="Securing 50k+ endpoints against APTs."
+                 challenge="Securing 50k+ endpoints against APTs using advanced threat analysis."
                  solution="Deployed Knoux Sentinel Core with real-time AI heuristics."
                  results="99.9% threat block rate"
                  logo={<Landmark className="w-6 h-6" />}
@@ -72,7 +72,7 @@ export const EnterpriseSection: React.FC = () => {
                  title="Healthcare Data Privacy"
                  company="MediSecure Systems"
                  industry="Healthcare"
-                 challenge="Compliance with HIPAA for 10M patient records."
+                 challenge="Compliance with HIPAA for 10M patient records and secure data transmission."
                  solution="Knoux UltraEncrypt Pro integration."
                  results="Zero data leaks in 2 years"
                  logo={<ShieldCheck className="w-6 h-6" />}
@@ -81,7 +81,7 @@ export const EnterpriseSection: React.FC = () => {
                  title="Government Infrastructure"
                  company="Dept. of Digital Affairs"
                  industry="Government"
-                 challenge="Legacy system migration to secure cloud."
+                 challenge="Legacy system migration to secure cloud environment with strict access control."
                  solution="Knoux X Enterprise Platform deployment."
                  results="40% reduction in IT costs"
                  logo={<Building className="w-6 h-6" />}
@@ -165,7 +165,7 @@ export const EnterpriseSection: React.FC = () => {
              </div>
           )}
 
-          {/* Demo Form */}
+          {/* Demo / Sales Deck Form */}
           {activeTab === 'demo' && (
             <DemoRequestForm />
           )}

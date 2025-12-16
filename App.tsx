@@ -12,14 +12,19 @@ import { ThemeLanguageProvider } from './contexts/ThemeLanguageContext';
 import { CustomCursor } from './components/CustomCursor';
 import { ProjectDetailPage } from './components/ProjectDetailPage';
 import { DashboardPage } from './components/DashboardPage';
+import { PrivacyPage } from './components/PrivacyPage';
+import { TermsPage } from './components/TermsPage';
+import { PreferencesPage } from './components/PreferencesPage';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ParticleBackground } from './components/ParticleBackground';
 import { Testimonials } from './components/Testimonials';
 import { Newsletter } from './components/Newsletter';
 import { ResourcesSection } from './components/ResourcesSection';
 
+type ViewState = 'home' | 'dashboard' | 'privacy' | 'terms' | 'preferences';
+
 const MainContent: React.FC = () => {
-  const [view, setView] = useState<'home' | 'dashboard'>('home');
+  const [view, setView] = useState<ViewState>('home');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -37,6 +42,12 @@ const MainContent: React.FC = () => {
 
   const handleBackToHome = () => {
     setSelectedProject(null);
+    setView('home');
+  };
+
+  const handleNavigate = (target: ViewState) => {
+    setView(target);
+    window.scrollTo(0, 0);
   };
 
   if (isLoading) {
@@ -77,7 +88,13 @@ const MainContent: React.FC = () => {
         
         <AnimatePresence mode="wait">
           {view === 'dashboard' ? (
-             <DashboardPage key="dashboard" onBack={() => setView('home')} />
+             <DashboardPage key="dashboard" onBack={handleBackToHome} />
+          ) : view === 'privacy' ? (
+             <PrivacyPage key="privacy" onBack={handleBackToHome} />
+          ) : view === 'terms' ? (
+             <TermsPage key="terms" onBack={handleBackToHome} />
+          ) : view === 'preferences' ? (
+             <PreferencesPage key="preferences" onBack={handleBackToHome} />
           ) : selectedProject ? (
             <ProjectDetailPage 
               key="detail-page" 
@@ -91,7 +108,7 @@ const MainContent: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <Navbar onOpenDashboard={() => setView('dashboard')} />
+              <Navbar onOpenDashboard={() => handleNavigate('dashboard')} />
               
               <main>
                 <Hero />
@@ -115,7 +132,7 @@ const MainContent: React.FC = () => {
                 <Newsletter />
               </main>
 
-              <Footer />
+              <Footer onNavigate={handleNavigate} />
             </motion.div>
           )}
         </AnimatePresence>

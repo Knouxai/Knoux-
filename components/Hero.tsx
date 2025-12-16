@@ -1,105 +1,115 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, Cpu, Code2, Star, Zap } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Cpu, Code2, Star, Zap, Globe } from 'lucide-react';
 import { useThemeLanguage } from '../contexts/ThemeLanguageContext';
 import { PROJECTS } from '../constants';
 import { ProjectCard } from './ProjectCard';
 
 export const Hero: React.FC = () => {
   const { t, isRTL } = useThemeLanguage();
-  const featuredProject = PROJECTS.find(p => p.id === 'x') || PROJECTS[0];
+  const featuredProject = PROJECTS.find(p => p.id === 'knoux-ai-ultra-pro-max') || PROJECTS[0];
 
   return (
-    <div id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 transition-colors duration-500">
+    <div id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 transition-colors duration-500 bg-[#030014]">
       
       {/* Dynamic Background */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Light Mode Blobs (Subtle) / Dark Mode Blobs (Neon) */}
-        <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-knoux-600/10 dark:bg-knoux-600/30 rounded-full blur-[120px] animate-pulse-slow mix-blend-multiply dark:mix-blend-normal"></div>
-        <div className="absolute bottom-[-10%] right-[10%] w-[600px] h-[600px] bg-indigo-300/20 dark:bg-indigo-900/40 rounded-full blur-[120px] animate-pulse-slow delay-1000 mix-blend-multiply dark:mix-blend-normal"></div>
-        <div className="absolute top-[40%] left-[50%] transform -translate-x-1/2 w-[800px] h-[400px] bg-white/60 dark:bg-knoux-900/50 blur-[100px]"></div>
+        {/* Deep Space Gradients */}
+        <div className="absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-[#5b21b6] rounded-full blur-[150px] opacity-40 animate-pulse-slow"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[800px] h-[800px] bg-[#2e1065] rounded-full blur-[180px] opacity-40 animate-pulse-slow delay-1000"></div>
+        <div className="absolute top-[40%] left-[50%] transform -translate-x-1/2 w-[800px] h-[400px] bg-[#4c1d95]/20 blur-[120px] rounded-full"></div>
         
-        {/* Grid overlay */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 dark:opacity-20 mix-blend-overlay"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)]"></div>
+        {/* Grid & Noise */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"></div>
+        
+        {/* Particles (CSS handled in global styles or index.html for simplicity, or we rely on ParticleBackground component in App.tsx) */}
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
         
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           
           {/* Text Content */}
           <div className={`text-center ${isRTL ? 'lg:text-right' : 'lg:text-left'}`}>
-            {/* Badge */}
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 dark:bg-white/5 border border-gray-200 dark:border-white/10 backdrop-blur-md mb-8 animate-float shadow-sm dark:shadow-none ${isRTL ? 'flex-row-reverse' : ''}`}>
+            {/* Status Badge */}
+            <div className={`inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-float shadow-lg shadow-knoux-600/10 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-knoux-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-knoux-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
               </span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300 tracking-wide">{t.hero.systemOperational} • V.4.0.1</span>
+              <span className="text-sm font-medium text-gray-300 tracking-widest uppercase">{t.hero.systemOperational} <span className="text-gray-600 mx-2">|</span> V.4.0.1</span>
             </div>
 
             {/* Main Title */}
-            <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tighter text-gray-900 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-white dark:via-gray-200 dark:to-gray-500 mb-6 drop-shadow-sm dark:drop-shadow-2xl">
+            <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tighter text-white mb-8 leading-[1.1]">
               {t.hero.mainTitleLine1}<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-knoux-600 to-knoux-400 dark:from-knoux-400 dark:to-knoux-accent neon-text">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] via-[#2dd4bf] to-[#a78bfa] bg-300% animate-gradient">
                 {t.hero.mainTitleLine2}
               </span>
             </h1>
 
-            <p className="mt-4 max-w-2xl text-xl text-gray-600 dark:text-gray-400 font-light leading-relaxed mx-auto lg:mx-0">
-              {t.hero.subtitle.split(',')[0]}, <span className="text-gray-900 dark:text-white font-semibold">{t.hero.subtitle.split(',')[1]}</span><br />
+            <p className="mt-4 max-w-2xl text-xl text-gray-400 font-light leading-relaxed mx-auto lg:mx-0">
+              <span className="text-white font-semibold italic">"{t.hero.subtitle}"</span>
+              <br className="mb-4 block" />
               {t.hero.description}
             </p>
 
             {/* CTA Buttons */}
             <div className={`mt-10 flex flex-col sm:flex-row justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'} gap-6`}>
-              <button className="group relative px-8 py-4 bg-knoux-600 rounded-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(91,33,182,0.4)] shadow-lg shadow-knoux-600/30">
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600"></div>
-                <div className="relative flex items-center justify-center font-bold text-white tracking-wide gap-2">
+              <button className="group relative px-8 py-4 bg-white text-black rounded-lg overflow-hidden transition-all hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)]">
+                <div className="relative flex items-center justify-center font-bold tracking-wide gap-2">
                   {t.hero.explore}
                   <ArrowRight className={`w-5 h-5 ${isRTL ? 'rotate-180 group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform`} />
                 </div>
               </button>
               
-              <button className="px-8 py-4 rounded-lg glass-panel hover:bg-white/50 dark:hover:bg-white/10 border border-gray-200 dark:border-white/20 text-gray-900 dark:text-white font-semibold transition-all hover:scale-105 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
-                <Code2 className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              <button className="px-8 py-4 rounded-lg bg-white/5 border border-white/10 text-white font-semibold transition-all hover:bg-white/10 hover:border-white/30 flex items-center justify-center gap-2 backdrop-blur-sm">
+                <Globe className="w-5 h-5 text-knoux-400" />
                 {t.hero.viewSource}
               </button>
+            </div>
+            
+            {/* Trust Badges */}
+            <div className={`mt-12 flex items-center gap-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500 justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'}`}>
+               <div className="h-8 flex items-center text-xs font-mono text-gray-500 border border-white/10 px-3 rounded">SECURE_BOOT_ENABLED</div>
+               <div className="h-8 flex items-center text-xs font-mono text-gray-500 border border-white/10 px-3 rounded">AI_CORE_ACTIVE</div>
             </div>
           </div>
 
           {/* 3D Card Showcase (Desktop Only) */}
-          <div className="hidden lg:block relative perspective-1000">
-             <div className="relative w-full max-w-md mx-auto transform transition-transform duration-700 hover:scale-105" style={{ transformStyle: 'preserve-3d', transform: 'rotateY(-10deg) rotateX(5deg)' }}>
-                {/* Decorative Elements */}
-                <div className="absolute -inset-4 bg-knoux-600/10 dark:bg-knoux-600/30 rounded-3xl blur-2xl -z-10 animate-pulse-slow"></div>
+          <div className="hidden lg:block relative perspective-1000 z-20">
+             <div className="relative w-full max-w-md mx-auto transform transition-transform duration-700 hover:scale-105 hover:rotate-y-6" style={{ transformStyle: 'preserve-3d', transform: 'rotateY(-10deg) rotateX(5deg)' }}>
+                {/* Decorative Elements around card */}
+                <div className="absolute -inset-10 bg-knoux-600/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
+                <div className="absolute -top-10 -right-10 w-24 h-24 bg-knoux-accent/20 rounded-full blur-2xl animate-float"></div>
                 
-                {/* Featured Badge */}
-                <div className="absolute -top-6 -right-6 z-20 animate-float" style={{ animationDelay: '1s' }}>
-                   <div className="glass-panel-heavy p-4 rounded-xl shadow-xl flex items-center gap-3 bg-white/80 dark:bg-[#0d0c18]/80">
-                      <div className="p-2 bg-yellow-500/10 dark:bg-yellow-500/20 rounded-full">
-                         <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
+                {/* Floating UI Elements */}
+                <div className="absolute -top-4 -right-12 z-30 animate-float" style={{ animationDelay: '1s' }}>
+                   <div className="glass-panel-heavy p-3 rounded-lg shadow-2xl flex items-center gap-3 bg-[#0d0c18]/90 border border-white/10 backdrop-blur-xl">
+                      <div className="p-1.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-md shadow-lg shadow-orange-500/20">
+                         <Star className="w-4 h-4 text-white fill-white" />
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-gray-500 uppercase">Top Project</div>
-                        <div className="font-bold text-gray-900 dark:text-white">Enterprise Ready</div>
+                        <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Top Rated</div>
+                        <div className="text-xs font-bold text-white">Enterprise Ready</div>
                       </div>
                    </div>
                 </div>
 
-                <div className="h-[450px]">
+                <div className="h-[420px] w-full">
                   <ProjectCard project={featuredProject} onOpen={() => {}} />
                 </div>
 
                 {/* Live Activity indicator */}
-                <div className="absolute -bottom-6 -left-6 z-20 animate-float" style={{ animationDelay: '2s' }}>
-                   <div className="glass-panel-heavy p-4 rounded-xl shadow-xl flex items-center gap-3 bg-white/80 dark:bg-[#0d0c18]/80">
-                      <div className="p-2 bg-green-500/10 dark:bg-green-500/20 rounded-full">
-                         <Zap className="w-6 h-6 text-green-500" />
+                <div className="absolute bottom-8 -left-12 z-30 animate-float" style={{ animationDelay: '2s' }}>
+                   <div className="glass-panel-heavy p-3 rounded-lg shadow-2xl flex items-center gap-3 bg-[#0d0c18]/90 border border-white/10 backdrop-blur-xl">
+                      <div className="relative p-1.5 bg-emerald-500/10 rounded-md">
+                         <Zap className="w-4 h-4 text-emerald-400" />
+                         <span className="absolute top-0 right-0 w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
                       </div>
                       <div>
-                        <div className="text-xs font-bold text-gray-500 uppercase">Live Activity</div>
-                        <div className="font-bold text-gray-900 dark:text-white">1.2k req/sec</div>
+                        <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Live Activity</div>
+                        <div className="text-xs font-bold text-white font-mono">1,204 req/s</div>
                       </div>
                    </div>
                 </div>
@@ -108,20 +118,24 @@ export const Hero: React.FC = () => {
 
         </div>
 
-        {/* Floating Metrics */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        {/* Floating Metrics Bar */}
+        <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {[
-            { icon: ShieldCheck, label: t.hero.stats.securityScore, value: "99.9%" },
-            { icon: Cpu, label: t.hero.stats.aiModels, value: "12" },
-            { icon: Code2, label: t.hero.stats.projects, value: "30+" }
+            { icon: ShieldCheck, label: t.hero.stats.securityScore, value: "99.9%", sub: "System Integrity" },
+            { icon: Cpu, label: t.hero.stats.aiModels, value: "12", sub: "Neural Networks" },
+            { icon: Code2, label: t.hero.stats.projects, value: "30+", sub: "Open Source" }
           ].map((stat, idx) => (
-            <div key={idx} className="glass-panel p-6 rounded-xl flex items-center gap-4 hover:border-knoux-400/50 transition-colors group bg-white/60 dark:bg-white/5 shadow-sm hover:shadow-md">
-              <div className="p-3 rounded-lg bg-knoux-100 dark:bg-knoux-900/50 text-knoux-600 dark:text-knoux-400 group-hover:text-knoux-700 dark:group-hover:text-knoux-accent transition-colors">
-                <stat.icon className="w-6 h-6" />
-              </div>
-              <div className={`text-${isRTL ? 'right' : 'left'}`}>
-                <div className="text-sm text-gray-500 uppercase tracking-wider font-semibold">{stat.label}</div>
-                <div className="text-2xl font-bold font-display text-gray-900 dark:text-white">{stat.value}</div>
+            <div key={idx} className="relative group p-6 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-knoux-600/0 via-knoux-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative flex items-center gap-5">
+                <div className="p-3 rounded-xl bg-[#1a0b2e] border border-white/10 text-knoux-400 group-hover:text-knoux-accent group-hover:shadow-[0_0_15px_rgba(45,212,191,0.3)] transition-all">
+                  <stat.icon className="w-6 h-6" />
+                </div>
+                <div className={`text-${isRTL ? 'right' : 'left'}`}>
+                  <div className="text-xs text-gray-500 uppercase tracking-widest font-semibold mb-1">{stat.label}</div>
+                  <div className="text-3xl font-bold font-display text-white">{stat.value}</div>
+                  <div className="text-[10px] text-knoux-400 mt-1 font-mono">{stat.sub}</div>
+                </div>
               </div>
             </div>
           ))}
@@ -129,8 +143,8 @@ export const Hero: React.FC = () => {
 
       </div>
       
-      {/* Decorative Floor */}
-      <div className="absolute bottom-0 w-full h-[300px] bg-gradient-to-t from-slate-50 dark:from-knoux-900 via-transparent to-transparent opacity-80 z-0"></div>
+      {/* Decorative Floor Glow */}
+      <div className="absolute bottom-0 w-full h-[300px] bg-gradient-to-t from-[#5b21b6]/20 via-transparent to-transparent opacity-50 z-0 pointer-events-none"></div>
     </div>
   );
 };

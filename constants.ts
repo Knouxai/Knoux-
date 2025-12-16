@@ -12,7 +12,7 @@ export const categories = [
     count: 8
   },
   {
-    id: 'desktop',
+    id: 'platform',
     icon: '💻',
     count: 6
   },
@@ -24,7 +24,7 @@ export const categories = [
   {
     id: 'blockchain',
     icon: '⛓️',
-    count: 3
+    count: 4
   }
 ];
 
@@ -74,8 +74,8 @@ export const PROJECTS: Project[] = [
     description: "AI-powered security scanning tool for detecting vulnerabilities and information leaks in desktop environments.",
     githubUrl: "https://github.com/KnouxOPS/KnouxGuard",
     tags: ["AI", "Security", "Desktop"],
-    featured: false,
-    stats: { stars: 56, forks: 8, securityScore: 92 }
+    featured: true,
+    stats: { stars: 156, forks: 28, securityScore: 92 }
   },
   {
     id: "kx-path",
@@ -133,7 +133,7 @@ export const PROJECTS: Project[] = [
     license: "Proprietary",
     description: "Dynamic web interface for organizing and displaying digital content and information dashboards.",
     githubUrl: "https://github.com/KnouxOPS/versaa7",
-    tags: ["UI/UX", "Dashboard"],
+    tags: ["UI/UX", "Dashboard", "Web"],
     featured: false,
     stats: { stars: 32, forks: 4, securityScore: 88 }
   },
@@ -172,6 +172,18 @@ export const PROJECTS: Project[] = [
     tags: ["AI", "Assistant", "Productivity"],
     featured: true,
     stats: { stars: 289, forks: 67, securityScore: 93 }
+  },
+  {
+    id: "duplicate",
+    name: "DUPLICATE",
+    type: "Experimental",
+    language: "TypeScript",
+    license: "Internal",
+    description: "Experimental sandbox for testing new features before core integration.",
+    githubUrl: "https://github.com/KnouxOPS/DUPLICATE",
+    tags: ["Dev", "Sandbox"],
+    featured: false,
+    stats: { stars: 5, forks: 1, securityScore: 80 }
   },
   {
     id: "knoux-smart-organizer",
@@ -222,6 +234,30 @@ export const PROJECTS: Project[] = [
     stats: { stars: 99, forks: 21, securityScore: 98 }
   },
   {
+    id: "knoux-20duplicate-20ai",
+    name: "Knoux AI Builder",
+    type: "Development",
+    language: "TypeScript",
+    license: "Builder.io",
+    description: "Development version for experimenting with new AI features and templates.",
+    githubUrl: "https://github.com/KnouxOPS/Knoux-20Duplicate-20AI",
+    tags: ["AI", "Dev", "Template"],
+    featured: false,
+    stats: { stars: 15, forks: 3, securityScore: 88 }
+  },
+  {
+    id: "knoux-swap",
+    name: "KNOUX SWAP",
+    type: "DeFi",
+    language: "TypeScript",
+    license: "Builder.io",
+    description: "Exchange project simulation and trading platform environment.",
+    githubUrl: "https://github.com/KnouxOPS/-20KNOUX-20SWAP",
+    tags: ["Blockchain", "DeFi", "Web"],
+    featured: false,
+    stats: { stars: 22, forks: 5, securityScore: 85 }
+  },
+  {
     id: "knoux-3dswap",
     name: "Knoux 3D Swap",
     type: "DeFi",
@@ -234,6 +270,18 @@ export const PROJECTS: Project[] = [
     stats: { stars: 76, forks: 18, securityScore: 88 }
   },
   {
+    id: "versa-glow-studio-pro",
+    name: "Versa Glow Studio",
+    type: "Design",
+    language: "TypeScript",
+    license: "Proprietary",
+    description: "Studio for editing digital content and visual effects with support for interactive interfaces.",
+    githubUrl: "https://github.com/KnouxOPS/versa-glow-studio-pro",
+    tags: ["Design", "UI/UX", "Web"],
+    featured: false,
+    stats: { stars: 40, forks: 6, securityScore: 87 }
+  },
+  {
     id: "radiant-sphere-chat",
     name: "Radiant Sphere Chat",
     type: "Communication",
@@ -242,8 +290,68 @@ export const PROJECTS: Project[] = [
     description: "Interactive 3D chat interface for displaying messages and attractive UI components.",
     githubUrl: "https://github.com/KnouxOPS/radiant-sphere-chat-view",
     tags: ["3D", "Chat", "UI"],
-    featured: false,
+    featured: true,
     stats: { stars: 112, forks: 30, securityScore: 90 }
+  },
+  {
+    id: "radiant-chat-sphere-ui",
+    name: "Radiant Chat UI",
+    type: "Library",
+    language: "TypeScript",
+    license: "Proprietary",
+    description: "Advanced 3D chat interface library integratable with messaging apps.",
+    githubUrl: "https://github.com/KnouxOPS/radiant-chat-sphere-ui",
+    tags: ["UI", "Library", "3D"],
+    featured: false,
+    stats: { stars: 95, forks: 25, securityScore: 91 }
+  },
+  {
+    id: "knoux-core-revive",
+    name: "Knoux Core Revive",
+    type: "Maintenance",
+    language: "TypeScript",
+    license: "Proprietary",
+    description: "Project for renewing and improving Knoux app cores, fixing bugs and adding features.",
+    githubUrl: "https://github.com/KnouxOPS/knoux-core-revive-project",
+    tags: ["Core", "Maintenance", "Refactor"],
+    featured: false,
+    stats: { stars: 30, forks: 8, securityScore: 94 }
+  },
+  {
+    id: "crypto-trading-dash",
+    name: "Crypto Trading Dash",
+    type: "Dashboard",
+    language: "TypeScript",
+    license: "Proprietary",
+    description: "Dashboard for tracking digital trades and managing crypto portfolios.",
+    githubUrl: "https://github.com/KnouxOPS/cryptocurrency-trading-dashboa-3484",
+    tags: ["Blockchain", "Dashboard", "Finance"],
+    featured: false,
+    stats: { stars: 60, forks: 12, securityScore: 89 }
+  },
+  {
+    id: "orge",
+    name: "Orge",
+    type: "Tool",
+    language: "TypeScript",
+    license: "Proprietary",
+    description: "Tool for internal digital resource management or advanced experimental interfaces.",
+    githubUrl: "https://github.com/KnouxOPS/orge",
+    tags: ["Internal", "Resource"],
+    featured: false,
+    stats: { stars: 18, forks: 2, securityScore: 85 }
+  },
+  {
+    id: "kforge",
+    name: "KForge",
+    type: "DevOps",
+    language: "TypeScript",
+    license: "Proprietary",
+    description: "Platform for developing and managing digital projects with build, deploy, and backend tools.",
+    githubUrl: "https://github.com/KnouxOPS/kforge",
+    tags: ["DevOps", "Platform", "Tools"],
+    featured: false,
+    stats: { stars: 45, forks: 10, securityScore: 92 }
   },
   {
     id: "cyber-app-genesis",
@@ -253,9 +361,33 @@ export const PROJECTS: Project[] = [
     license: "Proprietary",
     description: "Foundational security project for developing cyber applications, with advanced analysis and monitoring tools.",
     githubUrl: "https://github.com/KnouxOPS/cyber-app-genesis",
-    tags: ["Security", "Framework"],
+    tags: ["Security", "Framework", "Genesis"],
     featured: false,
     stats: { stars: 88, forks: 12, securityScore: 96 }
+  },
+  {
+    id: "knoux7",
+    name: "KNOUX7",
+    type: "Experimental",
+    language: "TypeScript",
+    license: "Proprietary",
+    description: "Experimental project or launching point for new initiatives within KnouxOPS.",
+    githubUrl: "https://github.com/KnouxOPS/-KNOUX7",
+    tags: ["Experimental", "Innovation"],
+    featured: false,
+    stats: { stars: 25, forks: 5, securityScore: 88 }
+  },
+  {
+    id: "mubeen-tech-stack-guide",
+    name: "Tech Stack Guide",
+    type: "Documentation",
+    language: "TypeScript",
+    license: "Proprietary",
+    description: "Comprehensive guide to programming technologies and tools used within KnouxOPS projects.",
+    githubUrl: "https://github.com/KnouxOPS/mubeen-tech-stack-guide",
+    tags: ["Docs", "Guide", "Education"],
+    featured: false,
+    stats: { stars: 150, forks: 45, securityScore: 99 }
   },
   {
     id: "knox-cyber-forge",

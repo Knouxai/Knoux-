@@ -2,15 +2,19 @@ import React from 'react';
 import { useThemeLanguage } from '../contexts/ThemeLanguageContext';
 import { Github, Twitter, Linkedin, Mail, Shield } from 'lucide-react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onNavigate: (page: 'home' | 'dashboard' | 'privacy' | 'terms' | 'preferences') => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const { t, language } = useThemeLanguage();
 
   const links = {
     products: [
-      { name: t.footer.sections.securitySuite, href: '#' },
-      { name: t.footer.sections.aiPlatform, href: '#' },
-      { name: t.footer.sections.enterprise, href: '#' },
-      { name: t.footer.sections.devTools, href: '#' }
+      { name: t.footer.sections.securitySuite, href: '#security' },
+      { name: t.footer.sections.aiPlatform, href: '#showcase' },
+      { name: t.footer.sections.enterprise, href: '#enterprise' },
+      { name: t.footer.sections.devTools, href: '#resources' }
     ],
     company: [
       { name: t.footer.sections.about, href: '#' },
@@ -27,12 +31,12 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300 relative z-10">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-4 lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-4 cursor-pointer" onClick={() => onNavigate('home')}>
                <Shield className="w-8 h-8 text-knoux-600 dark:text-knoux-400" />
                <span className="text-xl font-display font-bold text-gray-900 dark:text-white">
                  KNOUX<span className="text-knoux-600 dark:text-knoux-400">NEXUS</span>
@@ -45,7 +49,7 @@ export const Footer: React.FC = () => {
               <a href="#" className="text-gray-400 hover:text-knoux-600 dark:hover:text-white transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-knoux-600 dark:hover:text-white transition-colors">
+              <a href="https://github.com/KnouxOPS" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-knoux-600 dark:hover:text-white transition-colors">
                 <Github className="w-5 h-5" />
               </a>
               <a href="#" className="text-gray-400 hover:text-knoux-600 dark:hover:text-white transition-colors">
@@ -111,9 +115,9 @@ export const Footer: React.FC = () => {
             {t.footer.rights}
           </p>
           <div className="flex space-x-6 text-sm text-gray-500 dark:text-gray-400">
-            <a href="#" className="hover:text-knoux-600 dark:hover:text-white transition-colors">{t.footer.privacy}</a>
-            <a href="#" className="hover:text-knoux-600 dark:hover:text-white transition-colors">{t.footer.terms}</a>
-            <a href="#" className="hover:text-knoux-600 dark:hover:text-white transition-colors">{t.footer.preferences}</a>
+            <button onClick={() => onNavigate('privacy')} className="hover:text-knoux-600 dark:hover:text-white transition-colors">{t.footer.privacy}</button>
+            <button onClick={() => onNavigate('terms')} className="hover:text-knoux-600 dark:hover:text-white transition-colors">{t.footer.terms}</button>
+            <button onClick={() => onNavigate('preferences')} className="hover:text-knoux-600 dark:hover:text-white transition-colors">{t.footer.preferences}</button>
           </div>
         </div>
         
