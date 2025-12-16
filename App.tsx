@@ -20,6 +20,11 @@ import { ParticleBackground } from './components/ParticleBackground';
 import { Testimonials } from './components/Testimonials';
 import { Newsletter } from './components/Newsletter';
 import { ResourcesSection } from './components/ResourcesSection';
+import { ScrollToTop } from './components/ScrollToTop';
+import { FloatingElements } from './components/FloatingElements';
+import { InteractiveDemo } from './components/InteractiveDemo';
+import { InnovationLab } from './components/InnovationLab';
+import { CTABanner } from './components/CTABanner';
 
 type ViewState = 'home' | 'dashboard' | 'privacy' | 'terms' | 'preferences';
 
@@ -82,8 +87,9 @@ const MainContent: React.FC = () => {
   return (
     <>
       <CustomCursor />
+      <ScrollToTop />
       
-      <div className="min-h-screen bg-slate-50 dark:bg-knoux-900 text-slate-900 dark:text-white selection:bg-knoux-600 selection:text-white transition-colors duration-300">
+      <div className="min-h-screen bg-slate-50 dark:bg-knoux-900 text-slate-900 dark:text-white selection:bg-knoux-600 selection:text-white transition-colors duration-300 relative">
         <ParticleBackground />
         
         <AnimatePresence mode="wait">
@@ -109,11 +115,14 @@ const MainContent: React.FC = () => {
               transition={{ duration: 0.5 }}
             >
               <Navbar onOpenDashboard={() => handleNavigate('dashboard')} />
+              <FloatingElements />
               
-              <main>
+              <main className="relative z-10">
                 <Hero />
                 
                 <StatsSection />
+                
+                <InteractiveDemo />
                 
                 <div className="relative z-10">
                   <ProjectGrid onOpenProject={handleOpenProject} />
@@ -123,11 +132,15 @@ const MainContent: React.FC = () => {
                 
                 <EnterpriseSection />
 
+                <InnovationLab />
+
                 <ResourcesSection />
 
                 <Testimonials />
                 
                 <DashboardPreview />
+
+                <CTABanner />
 
                 <Newsletter />
               </main>

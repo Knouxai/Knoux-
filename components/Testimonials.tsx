@@ -1,10 +1,11 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useThemeLanguage } from '../contexts/ThemeLanguageContext';
 
 export const Testimonials: React.FC = () => {
   const { language } = useThemeLanguage();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const testimonials = language === 'ar' ? [
     {
@@ -58,9 +59,22 @@ export const Testimonials: React.FC = () => {
     }
   ];
 
+  const nextTestimonial = () => {
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(nextTestimonial, 8000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <section className="py-20 px-4 bg-gray-50/50 dark:bg-black/20 border-t border-gray-200 dark:border-white/5 transition-colors duration-300">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-20 px-4 bg-gray-50/50 dark:bg-black/20 border-t border-gray-200 dark:border-white/5 transition-colors duration-300 overflow-hidden">
+      <div className="max-w-5xl mx-auto text-center relative">
         <div className="text-center mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -70,51 +84,68 @@ export const Testimonials: React.FC = () => {
           >
             {language === 'ar' ? 'ما يقوله عملاؤنا' : 'What Our Clients Say'}
           </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
-          >
-            {language === 'ar' 
-              ? 'تجارب وآراء عملائنا الذين استفادوا من حلولنا الأمنية المتقدمة' 
-              : 'Experiences and opinions from our clients who benefited from our advanced security solutions'}
-          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="glass-panel p-8 rounded-xl relative bg-white dark:bg-white/5"
+        <div className="relative min-h-[300px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+                <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className="glass-panel p-8 md:p-12 rounded-2xl bg-white dark:bg-white/5 max-w-3xl mx-auto relative"
+                >
+                <Quote className="absolute top-6 left-6 w-12 h-12 text-knoux-600/10 dark:text-knoux-400/10 transform rotate-180" />
+                <Quote className="absolute bottom-6 right-6 w-12 h-12 text-knoux-600/10 dark:text-knoux-400/10" />
+                
+                <div className="mb-8 relative z-10">
+                    <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                    "{testimonials[currentIndex].content}"
+                    </p>
+                </div>
+                
+                <div className="flex flex-col items-center justify-center">
+                    <div className="w-16 h-16 bg-gradient-to-tr from-knoux-600 to-knoux-400 rounded-full flex items-center justify-center text-white font-bold text-xl mb-3 shadow-lg">
+                    {testimonials[currentIndex].avatar}
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-900 dark:text-white">{testimonials[currentIndex].name}</h4>
+                    <p className="text-sm text-gray-500 dark:text-knoux-400">
+                    {testimonials[currentIndex].role}, {testimonials[currentIndex].company}
+                    </p>
+                </div>
+                </motion.div>
+            </AnimatePresence>
+
+            <button
+                onClick={prevTestimonial}
+                className="absolute top-1/2 -left-4 md:-left-12 transform -translate-y-1/2 p-3 bg-white dark:bg-gray-800 hover:bg-knoux-600 dark:hover:bg-knoux-600 hover:text-white rounded-full shadow-lg text-gray-400 transition-all z-20"
+                aria-label={language === 'ar' ? 'السابق' : 'Previous'}
             >
-              <Quote className="absolute top-6 right-6 w-8 h-8 text-knoux-600/20 dark:text-knoux-400/20" />
-              
-              <div className="mb-6">
-                <p className="text-gray-600 dark:text-gray-300 italic">
-                  "{testimonial.content}"
-                </p>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-knoux-600 to-knoux-400 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                  {testimonial.avatar}
-                </div>
-                <div>
-                  <h4 className="text-gray-900 dark:text-white font-semibold">{testimonial.name}</h4>
-                  <p className="text-gray-500 dark:text-gray-400 text-xs">
-                    {testimonial.role}, {testimonial.company}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                <ChevronLeft className="w-6 h-6 rtl:rotate-180" />
+            </button>
+            
+            <button
+                onClick={nextTestimonial}
+                className="absolute top-1/2 -right-4 md:-right-12 transform -translate-y-1/2 p-3 bg-white dark:bg-gray-800 hover:bg-knoux-600 dark:hover:bg-knoux-600 hover:text-white rounded-full shadow-lg text-gray-400 transition-all z-20"
+                aria-label={language === 'ar' ? 'التالي' : 'Next'}
+            >
+                <ChevronRight className="w-6 h-6 rtl:rotate-180" />
+            </button>
+        </div>
+
+        <div className="flex justify-center gap-2 mt-8">
+            {testimonials.map((_, idx) => (
+                <button
+                    key={idx}
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                        idx === currentIndex 
+                        ? 'bg-knoux-600 w-8' 
+                        : 'bg-gray-300 dark:bg-gray-700 hover:bg-knoux-400'
+                    }`}
+                />
+            ))}
         </div>
       </div>
     </section>

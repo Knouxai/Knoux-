@@ -32,50 +32,6 @@ export const PreferencesPage: React.FC<PreferencesPageProps> = ({ onBack }) => {
     setPrivacy(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const preferencesSections = language === 'ar' ? [
-    {
-      title: 'الإعدادات العامة',
-      icon: <Settings className="w-6 h-6" />,
-      description: 'تخصيص إعدادات حسابك وتجربتك العامة'
-    },
-    {
-      title: 'الإشعارات',
-      icon: <Bell className="w-6 h-6" />,
-      description: 'إدارة كيفية تلقي الإشعارات والتواصل معك'
-    },
-    {
-      title: 'الخصوصية والأمان',
-      icon: <Shield className="w-6 h-6" />,
-      description: 'التحكم في من يمكنه رؤية معلوماتك ونشاطك'
-    },
-    {
-      title: 'اللغة والإمكانية',
-      icon: <Globe className="w-6 h-6" />,
-      description: 'تخصيص لغة العرض وإعدادات الوصول'
-    }
-  ] : [
-    {
-      title: 'General Settings',
-      icon: <Settings className="w-6 h-6" />,
-      description: 'Customize your account settings and overall experience'
-    },
-    {
-      title: 'Notifications',
-      icon: <Bell className="w-6 h-6" />,
-      description: 'Manage how you receive notifications and communications'
-    },
-    {
-      title: 'Privacy & Security',
-      icon: <Shield className="w-6 h-6" />,
-      description: 'Control who can see your information and activity'
-    },
-    {
-      title: 'Language & Accessibility',
-      icon: <Globe className="w-6 h-6" />,
-      description: 'Customize display language and accessibility settings'
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-knoux-900 pt-20 transition-colors duration-500">
       <nav className="fixed top-0 left-0 w-full z-50 glass-panel-heavy px-4 sm:px-8 py-4 flex justify-between items-center">
@@ -148,4 +104,80 @@ export const PreferencesPage: React.FC<PreferencesPageProps> = ({ onBack }) => {
                 </div>
 
                 {/* Language */}
-                <div className="p-4 bg-gray-50 dark:bg-black/20 rounded
+                <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-black/20 rounded-lg border border-gray-100 dark:border-white/5">
+                  <div className="flex items-center">
+                    <Globe className="w-5 h-5 text-knoux-600 dark:text-knoux-400 mr-3 rtl:ml-3" />
+                    <div>
+                      <h3 className="text-gray-900 dark:text-white font-medium">
+                        {language === 'ar' ? 'لغة العرض' : 'Display Language'}
+                      </h3>
+                      <p className="text-gray-500 text-sm">
+                        {language === 'ar' ? 'العربية' : 'English'}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={toggleLanguage}
+                    className="px-4 py-2 bg-white dark:bg-white/10 border border-gray-200 dark:border-white/10 rounded-lg text-sm font-medium hover:border-knoux-600 dark:hover:border-knoux-400 transition-colors dark:text-white"
+                  >
+                    {language === 'ar' ? 'Switch to English' : 'تغيير للعربية'}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Notifications & Privacy */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className="space-y-8"
+            >
+               {/* Notifications */}
+               <div className="glass-panel rounded-2xl p-6 bg-white dark:bg-white/5">
+                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                    <Bell className="w-6 h-6 mr-2 rtl:ml-2 text-knoux-600 dark:text-knoux-400" />
+                    {language === 'ar' ? 'الإشعارات' : 'Notifications'}
+                 </h2>
+                 <div className="space-y-4">
+                    {Object.entries(notifications).map(([key, value]) => (
+                      <div key={key} className="flex items-center justify-between">
+                         <span className="capitalize text-gray-700 dark:text-gray-300">{key} Notifications</span>
+                         <button 
+                           onClick={() => handleNotificationChange(key as any)}
+                           className={`w-12 h-6 rounded-full transition-colors relative ${value ? 'bg-knoux-600' : 'bg-gray-300 dark:bg-gray-700'}`}
+                         >
+                           <div className={`w-5 h-5 bg-white rounded-full transition-transform absolute top-0.5 left-0.5 ${value ? 'transform translate-x-6' : 'translate-x-0'}`}></div>
+                         </button>
+                      </div>
+                    ))}
+                 </div>
+               </div>
+
+               {/* Privacy */}
+               <div className="glass-panel rounded-2xl p-6 bg-white dark:bg-white/5">
+                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                    <Shield className="w-6 h-6 mr-2 rtl:ml-2 text-knoux-600 dark:text-knoux-400" />
+                    {language === 'ar' ? 'الخصوصية' : 'Privacy'}
+                 </h2>
+                 <div className="space-y-4">
+                    {Object.entries(privacy).map(([key, value]) => (
+                      <div key={key} className="flex items-center justify-between">
+                         <span className="capitalize text-gray-700 dark:text-gray-300">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                         <button 
+                           onClick={() => handlePrivacyChange(key as any)}
+                           className={`w-12 h-6 rounded-full transition-colors relative ${value ? 'bg-knoux-600' : 'bg-gray-300 dark:bg-gray-700'}`}
+                         >
+                           <div className={`w-5 h-5 bg-white rounded-full transition-transform absolute top-0.5 left-0.5 ${value ? 'transform translate-x-6' : 'translate-x-0'}`}></div>
+                         </button>
+                      </div>
+                    ))}
+                 </div>
+               </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
