@@ -25,6 +25,12 @@ import { FloatingElements } from './components/FloatingElements';
 import { InteractiveDemo } from './components/InteractiveDemo';
 import { InnovationLab } from './components/InnovationLab';
 import { CTABanner } from './components/CTABanner';
+import { AIAssistant } from './components/AIAssistant';
+import { RealtimeMonitor } from './components/RealtimeMonitor';
+import { HolographicDashboard } from './components/HolographicDashboard';
+import { BiometricAuth } from './components/BiometricAuth';
+import { ProjectMapPreview } from './components/ProjectMapPreview';
+import { CyberpunkPreview } from './components/CyberpunkPreview';
 
 type ViewState = 'home' | 'dashboard' | 'privacy' | 'terms' | 'preferences';
 
@@ -32,6 +38,7 @@ const MainContent: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     // Simulate initial loading sequence
@@ -51,7 +58,17 @@ const MainContent: React.FC = () => {
   };
 
   const handleNavigate = (target: ViewState) => {
-    setView(target);
+    if (target === 'dashboard') {
+      setShowAuth(true); // Trigger Auth first
+    } else {
+      setView(target);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const onAuthSuccess = () => {
+    setShowAuth(false);
+    setView('dashboard');
     window.scrollTo(0, 0);
   };
 
@@ -88,6 +105,20 @@ const MainContent: React.FC = () => {
     <>
       <CustomCursor />
       <ScrollToTop />
+      
+      {/* Floating Widgets */}
+      <AIAssistant />
+      <HolographicDashboard />
+      <RealtimeMonitor />
+      <ProjectMapPreview />
+      <CyberpunkPreview />
+      
+      {showAuth && (
+        <BiometricAuth 
+          onSuccess={onAuthSuccess} 
+          onClose={() => setShowAuth(false)} 
+        />
+      )}
       
       <div className="min-h-screen bg-slate-50 dark:bg-knoux-900 text-slate-900 dark:text-white selection:bg-knoux-600 selection:text-white transition-colors duration-300 relative">
         <ParticleBackground />
