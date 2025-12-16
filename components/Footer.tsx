@@ -3,7 +3,7 @@ import { useThemeLanguage } from '../contexts/ThemeLanguageContext';
 import { Github, Twitter, Linkedin, Mail, Shield } from 'lucide-react';
 
 interface FooterProps {
-  onNavigate: (page: 'home' | 'dashboard' | 'privacy' | 'terms' | 'preferences') => void;
+  onNavigate: (page: 'home' | 'dashboard' | 'privacy' | 'terms' | 'preferences' | 'empathy' | 'journey') => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
@@ -27,6 +27,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       { name: t.footer.sections.blog, href: '#' },
       { name: t.footer.sections.support, href: '#' },
       { name: t.footer.sections.status, href: '#' }
+    ],
+    design: [
+        { name: language === 'ar' ? 'خريطة التعاطف' : 'Empathy Map', action: () => onNavigate('empathy') },
+        { name: language === 'ar' ? 'رحلة المستخدم' : 'User Journey', action: () => onNavigate('journey') }
     ]
   };
 
@@ -88,6 +92,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   <a href={item.href} className="text-gray-500 dark:text-gray-400 hover:text-knoux-600 dark:hover:text-white text-sm transition-colors">
                     {item.name}
                   </a>
+                </li>
+              ))}
+              {/* Added Design Links */}
+              {links.design.map((item) => (
+                <li key={item.name}>
+                  <button onClick={item.action} className="text-gray-500 dark:text-gray-400 hover:text-knoux-600 dark:hover:text-white text-sm transition-colors text-left rtl:text-right w-full">
+                    {item.name}
+                  </button>
                 </li>
               ))}
             </ul>

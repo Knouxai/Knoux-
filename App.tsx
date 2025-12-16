@@ -31,8 +31,10 @@ import { HolographicDashboard } from './components/HolographicDashboard';
 import { BiometricAuth } from './components/BiometricAuth';
 import { ProjectMapPreview } from './components/ProjectMapPreview';
 import { CyberpunkPreview } from './components/CyberpunkPreview';
+import { EmpathyMap } from './components/EmpathyMap';
+import { UserJourneyMap } from './components/UserJourneyMap';
 
-type ViewState = 'home' | 'dashboard' | 'privacy' | 'terms' | 'preferences';
+type ViewState = 'home' | 'dashboard' | 'privacy' | 'terms' | 'preferences' | 'empathy' | 'journey';
 
 const MainContent: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
@@ -132,6 +134,10 @@ const MainContent: React.FC = () => {
              <TermsPage key="terms" onBack={handleBackToHome} />
           ) : view === 'preferences' ? (
              <PreferencesPage key="preferences" onBack={handleBackToHome} />
+          ) : view === 'empathy' ? (
+             <EmpathyMap key="empathy" onBack={handleBackToHome} />
+          ) : view === 'journey' ? (
+             <UserJourneyMap key="journey" onBack={handleBackToHome} />
           ) : selectedProject ? (
             <ProjectDetailPage 
               key="detail-page" 
