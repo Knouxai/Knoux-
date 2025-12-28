@@ -4,6 +4,7 @@ import { useThemeLanguage } from '../contexts/ThemeLanguageContext';
 export const ParticleBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { theme } = useThemeLanguage();
+  const mouseRef = useRef({ x: 0, y: 0, radius: 150 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,20 +15,27 @@ export const ParticleBackground: React.FC = () => {
 
     let animationFrameId: number;
 
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current.x = e.clientX;
+      mouseRef.current.y = e.clientY;
+    };
+
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', handleMouseMove);
 
-    // Particle class
     class Particle {
       x: number;
       y: number;
+      baseX: number;
+      baseY: number;
       size: number;
+      density: number;
       speedX: number;
       speedY: number;
       color: string;
@@ -35,22 +43,45 @@ export const ParticleBackground: React.FC = () => {
       constructor() {
         this.x = Math.random() * canvas!.width;
         this.y = Math.random() * canvas!.height;
+        this.baseX = this.x;
+        this.baseY = this.y;
         this.size = Math.random() * 2 + 0.5;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
-        // Adjust color based on theme (purple for dark, subtle blue/gray for light)
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.density = (Math.random() * 30) + 1;
+        
         const isDark = document.documentElement.classList.contains('dark');
         this.color = isDark 
-          ? `rgba(139, 92, 246, ${Math.random() * 0.3 + 0.1})` 
-          : `rgba(99, 102, 241, ${Math.random() * 0.2 + 0.05})`;
+          ? `rgba(139, 92, 246, ${Math.random() * 0.4 + 0.2})` 
+          : `rgba(99, 102, 241, ${Math.random() * 0.3 + 0.1})`;
       }
 
       update() {
+        // Natural drift
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x > canvas!.width || this.x < 0) this.speedX *= -1;
-        if (this.y > canvas!.height || this.y < 0) this.speedY *= -1;
+        // Interaction with mouse
+        let dx = mouseRef.current.x - this.x;
+        let dy = mouseRef.current.y - this.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let forceDirectionX = dx / distance;
+        let forceDirectionY = dy / distance;
+        let maxDistance = mouseRef.current.radius;
+        let force = (maxDistance - distance) / maxDistance;
+        let directionX = forceDirectionX * force * this.density;
+        let directionY = forceDirectionY * force * this.density;
+
+        if (distance < mouseRef.current.radius) {
+          this.x -= directionX;
+          this.y -= directionY;
+        }
+
+        // Screen boundaries wrap
+        if (this.x > canvas!.width) this.x = 0;
+        else if (this.x < 0) this.x = canvas!.width;
+        if (this.y > canvas!.height) this.y = 0;
+        else if (this.y < 0) this.y = canvas!.height;
       }
 
       draw() {
@@ -62,15 +93,13 @@ export const ParticleBackground: React.FC = () => {
       }
     }
 
-    // Create particles
     const particles: Particle[] = [];
-    const particleCount = 60; // Reduced count for performance
+    const particleCount = 80;
 
     for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
 
-    // Connect particles
     const connectParticles = () => {
       if (!ctx) return;
       const isDark = document.documentElement.classList.contains('dark');
@@ -81,12 +110,12 @@ export const ParticleBackground: React.FC = () => {
           const dy = particles[a].y - particles[b].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 120) {
+          if (distance < 150) {
             ctx.beginPath();
             ctx.strokeStyle = isDark 
-              ? `rgba(139, 92, 246, ${0.15 * (1 - distance / 120)})`
-              : `rgba(99, 102, 241, ${0.1 * (1 - distance / 120)})`;
-            ctx.lineWidth = 0.5;
+              ? `rgba(139, 92, 246, ${0.15 * (1 - distance / 150)})`
+              : `rgba(99, 102, 241, ${0.1 * (1 - distance / 150)})`;
+            ctx.lineWidth = 0.8;
             ctx.moveTo(particles[a].x, particles[a].y);
             ctx.lineTo(particles[b].x, particles[b].y);
             ctx.stroke();
@@ -95,7 +124,6 @@ export const ParticleBackground: React.FC = () => {
       }
     };
 
-    // Animation loop
     const animate = () => {
       if (!ctx || !canvas) return;
       
@@ -114,9 +142,10 @@ export const ParticleBackground: React.FC = () => {
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [theme]); // Re-run when theme changes to update colors
+  }, [theme]);
 
   return (
     <canvas

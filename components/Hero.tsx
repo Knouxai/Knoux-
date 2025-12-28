@@ -3,26 +3,67 @@ import { ArrowRight, ShieldCheck, Cpu, Code2, Star, Zap, Globe } from 'lucide-re
 import { useThemeLanguage } from '../contexts/ThemeLanguageContext';
 import { PROJECTS } from '../constants';
 import { ProjectCard } from './ProjectCard';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
 export const Hero: React.FC = () => {
   const { t, isRTL } = useThemeLanguage();
   const featuredProject = PROJECTS.find(p => p.id === 'knoux-ai-ultra-pro-max') || PROJECTS[0];
 
+  // Mouse tracking for 3D Parallax
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { damping: 50, stiffness: 300 };
+  const smoothMouseX = useSpring(mouseX, springConfig);
+  const smoothMouseY = useSpring(mouseY, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    mouseX.set((clientX / innerWidth) - 0.5);
+    mouseY.set((clientY / innerHeight) - 0.5);
+  };
+
+  // Transform layers for different depths
+  const bg1X = useTransform(smoothMouseX, [-0.5, 0.5], [-50, 50]);
+  const bg1Y = useTransform(smoothMouseY, [-0.5, 0.5], [-50, 50]);
+  
+  const bg2X = useTransform(smoothMouseX, [-0.5, 0.5], [30, -30]);
+  const bg2Y = useTransform(smoothMouseY, [-0.5, 0.5], [30, -30]);
+
+  const gridRotateX = useTransform(smoothMouseY, [-0.5, 0.5], [5, -5]);
+  const gridRotateY = useTransform(smoothMouseX, [-0.5, 0.5], [-5, 5]);
+
   return (
-    <div id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 transition-colors duration-500 bg-[#030014]">
+    <div 
+      id="home" 
+      onMouseMove={handleMouseMove}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 transition-colors duration-500 bg-[#030014]"
+    >
       
       {/* Dynamic Background */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Deep Space Gradients */}
-        <div className="absolute top-[-20%] left-[20%] w-[600px] h-[600px] bg-[#5b21b6] rounded-full blur-[150px] opacity-40 animate-pulse-slow"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[800px] h-[800px] bg-[#2e1065] rounded-full blur-[180px] opacity-40 animate-pulse-slow delay-1000"></div>
-        <div className="absolute top-[40%] left-[50%] transform -translate-x-1/2 w-[800px] h-[400px] bg-[#4c1d95]/20 blur-[120px] rounded-full"></div>
+      <div className="absolute inset-0 pointer-events-none perspective-1000">
+        {/* Deep Space Gradients with Parallax */}
+        <motion.div 
+          style={{ x: bg1X, y: bg1Y }}
+          className="absolute top-[-20%] left-[20%] w-[700px] h-[700px] bg-[#5b21b6] rounded-full blur-[160px] opacity-40 animate-pulse-slow"
+        ></motion.div>
         
-        {/* Grid & Noise */}
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)]"></div>
+        <motion.div 
+          style={{ x: bg2X, y: bg2Y }}
+          className="absolute bottom-[-10%] right-[-10%] w-[900px] h-[900px] bg-[#2e1065] rounded-full blur-[180px] opacity-40 animate-pulse-slow delay-1000"
+        ></motion.div>
         
-        {/* Particles (CSS handled in global styles or index.html for simplicity, or we rely on ParticleBackground component in App.tsx) */}
+        <motion.div 
+          style={{ scale: 1.1, rotateX: gridRotateX, rotateY: gridRotateY }}
+          className="absolute inset-0 z-0"
+        >
+          {/* Interactive Grid */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_90%)] transition-transform duration-1000"></div>
+          
+          {/* Animated Noise */}
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay"></div>
+        </motion.div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 w-full">
@@ -32,27 +73,41 @@ export const Hero: React.FC = () => {
           {/* Text Content */}
           <div className={`text-center ${isRTL ? 'lg:text-right' : 'lg:text-left'}`}>
             {/* Status Badge */}
-            <div className={`inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-float shadow-lg shadow-knoux-600/10 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 animate-float shadow-lg shadow-knoux-600/10 ${isRTL ? 'flex-row-reverse' : ''}`}
+            >
               <span className="relative flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
               </span>
               <span className="text-sm font-medium text-gray-300 tracking-widest uppercase">{t.hero.systemOperational} <span className="text-gray-600 mx-2">|</span> V.4.0.1</span>
-            </div>
+            </motion.div>
 
             {/* Main Title */}
-            <h1 className="text-6xl md:text-8xl font-display font-bold tracking-tighter text-white mb-8 leading-[1.1]">
+            <motion.h1 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="text-6xl md:text-8xl font-display font-bold tracking-tighter text-white mb-8 leading-[1.1]"
+            >
               {t.hero.mainTitleLine1}<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] via-[#2dd4bf] to-[#a78bfa] bg-300% animate-gradient">
                 {t.hero.mainTitleLine2}
               </span>
-            </h1>
+            </motion.h1>
 
-            <p className="mt-4 max-w-2xl text-xl text-gray-400 font-light leading-relaxed mx-auto lg:mx-0">
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="mt-4 max-w-2xl text-xl text-gray-400 font-light leading-relaxed mx-auto lg:mx-0"
+            >
               <span className="text-white font-semibold italic">"{t.hero.subtitle}"</span>
               <br className="mb-4 block" />
               {t.hero.description}
-            </p>
+            </motion.p>
 
             {/* CTA Buttons */}
             <div className={`mt-10 flex flex-col sm:flex-row justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'} gap-6`}>
@@ -68,18 +123,14 @@ export const Hero: React.FC = () => {
                 {t.hero.viewSource}
               </button>
             </div>
-            
-            {/* Trust Badges */}
-            <div className={`mt-12 flex items-center gap-6 opacity-60 grayscale hover:grayscale-0 transition-all duration-500 justify-center ${isRTL ? 'lg:justify-end' : 'lg:justify-start'}`}>
-               <div className="h-8 flex items-center text-xs font-mono text-gray-500 border border-white/10 px-3 rounded">SECURE_BOOT_ENABLED</div>
-               <div className="h-8 flex items-center text-xs font-mono text-gray-500 border border-white/10 px-3 rounded">AI_CORE_ACTIVE</div>
-            </div>
           </div>
 
           {/* 3D Card Showcase (Desktop Only) */}
           <div className="hidden lg:block relative perspective-1000 z-20">
-             <div className="relative w-full max-w-md mx-auto transform transition-transform duration-700 hover:scale-105 hover:rotate-y-6" style={{ transformStyle: 'preserve-3d', transform: 'rotateY(-10deg) rotateX(5deg)' }}>
-                {/* Decorative Elements around card */}
+             <motion.div 
+               style={{ rotateX: gridRotateX, rotateY: gridRotateY }}
+               className="relative w-full max-w-md mx-auto"
+             >
                 <div className="absolute -inset-10 bg-knoux-600/20 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
                 <div className="absolute -top-10 -right-10 w-24 h-24 bg-knoux-accent/20 rounded-full blur-2xl animate-float"></div>
                 
@@ -96,11 +147,10 @@ export const Hero: React.FC = () => {
                    </div>
                 </div>
 
-                <div className="h-[420px] w-full">
+                <div className="h-[420px] w-full transform transition-all duration-700 hover:scale-105">
                   <ProjectCard project={featuredProject} onOpen={() => {}} />
                 </div>
 
-                {/* Live Activity indicator */}
                 <div className="absolute bottom-8 -left-12 z-30 animate-float" style={{ animationDelay: '2s' }}>
                    <div className="glass-panel-heavy p-3 rounded-lg shadow-2xl flex items-center gap-3 bg-[#0d0c18]/90 border border-white/10 backdrop-blur-xl">
                       <div className="relative p-1.5 bg-emerald-500/10 rounded-md">
@@ -113,7 +163,7 @@ export const Hero: React.FC = () => {
                       </div>
                    </div>
                 </div>
-             </div>
+             </motion.div>
           </div>
 
         </div>
@@ -125,7 +175,13 @@ export const Hero: React.FC = () => {
             { icon: Cpu, label: t.hero.stats.aiModels, value: "12", sub: "Neural Networks" },
             { icon: Code2, label: t.hero.stats.projects, value: "30+", sub: "Open Source" }
           ].map((stat, idx) => (
-            <div key={idx} className="relative group p-6 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 + (idx * 0.1) }}
+              className="relative group p-6 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+            >
               <div className="absolute inset-0 bg-gradient-to-r from-knoux-600/0 via-knoux-600/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div className="relative flex items-center gap-5">
                 <div className="p-3 rounded-xl bg-[#1a0b2e] border border-white/10 text-knoux-400 group-hover:text-knoux-accent group-hover:shadow-[0_0_15px_rgba(45,212,191,0.3)] transition-all">
@@ -137,7 +193,7 @@ export const Hero: React.FC = () => {
                   <div className="text-[10px] text-knoux-400 mt-1 font-mono">{stat.sub}</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
